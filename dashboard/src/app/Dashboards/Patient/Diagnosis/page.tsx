@@ -49,7 +49,7 @@ const pred_ = {
 };
 function Prediction(props: any) {
   const { data: APIData, error } = useSWR(
-    `http://127.0.0.1:5000/Predict`,
+    `https://bits-bz45.onrender.com/Predict`,
     fetcher,
     { refreshInterval: 5000 }
   );

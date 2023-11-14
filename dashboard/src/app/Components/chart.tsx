@@ -47,7 +47,7 @@ const fetcher:any = async (...args: Parameters<typeof fetch>): Promise<any> => {
 
 export function Chart(params: any) {
   const { data: APIData, error } = useSWR(
-    `http://127.0.0.1:5000/live_Data`,
+    `https://bits-bz45.onrender.com/live_Data`,
     fetcher,
     { refreshInterval: 10 }
   );

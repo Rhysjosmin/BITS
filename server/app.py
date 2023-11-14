@@ -7,6 +7,8 @@
 import random
 import requests
 import numpy as np
+import datetime
+
 TOKEN=''
 API_URL = "https://api-inference.huggingface.co/models/gianlab/swin-tiny-patch4-window7-224-finetuned-ecg-classification"
 headers = {"Authorization": f"Bearer {TOKEN}"}
@@ -24,7 +26,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 cors=CORS(app)
-
+latestRequest=datetime.datetime.now()
 i=0
 liveD=[]
 @app.route('/live_Data')
@@ -43,8 +45,15 @@ def LiveData():
         liveD.pop(0)
                     
     return json.dumps({'data':liveD}) 
-    
-    
+
+
+@app.route('/Send', methods=['POST'])    
+def Send():
+    global latestRequest
+    return json.dumps({'done':True})
+
+
+
 @app.route('/Predict')
 def Predict():
     

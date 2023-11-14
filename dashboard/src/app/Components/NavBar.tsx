@@ -3,7 +3,10 @@ import { SVGProps, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MaterialSymbolsArrowBackIosNewRounded } from "./icons";
+import {
+  MaterialSymbolsArrowBackIosNewRounded,
+  MaterialSymbolsLogoutRounded,
+} from "./icons";
 function BackButton() {
   const router = useRouter();
 
@@ -62,27 +65,24 @@ function Profile(props: any) {
   );
 }
 
-
 export function NavBar(props: any) {
-  const router =useRouter()
+  const router = useRouter();
 
-  function LogOut(){
-    localStorage.setItem('LoggedIn','false')
-    router.replace('/')
+  function LogOut() {
+    localStorage.setItem("LoggedIn", "false");
+    router.replace("/");
   }
 
-
   const [user, setUser] = useState({
-    name:'',
-    userType:''
+    name: "",
+    userType: "",
   });
   useEffect(() => {
     setUser({
       name: String(localStorage.getItem("user")),
-      userType: String(localStorage.getItem("userType"))
-     
+      userType: String(localStorage.getItem("userType")),
     });
-  },[]);
+  }, []);
   return (
     <div
       className={`bg-blue-100  flex p-2 gap-2 h-full  items-center justify-between`}
@@ -92,10 +92,11 @@ export function NavBar(props: any) {
       {/* <SearchBar/> */}
       <Profile user={user.name} />
       <button
-        onClick={()=>LogOut()}
-        className="fixed right-0 bg-red-300 h-12 rounded-l-2xl flex items-center p-3 top-24 hover:bg-red-500"
+        onClick={() => LogOut()}
+        className="fixed right-0 bg-red-600 h-12 rounded-l-2xl flex items-center p-3 top-24 hover:bg-red-500"
       >
-        Temporary Logout
+        <MaterialSymbolsLogoutRounded />
+        Logout
       </button>
     </div>
   );

@@ -56,12 +56,14 @@ function Prediction(props: any) {
 
   if (error)
     return (
-      <div className="bg-[#22020266] w-64 h-40 rounded-lg p-2 ">
-        Failed to load
+      <div className="m-3  border border-1 rounded-lg border-red-600 bg-red-500/20  p-3 flex w-96">
+        <h1 className="">Failed To Load</h1>
       </div>
     );
   if (!APIData)
-    return <div className="w-64 h-40 bg-[#02221866] rounded-lg p-2"></div>;
+    return <div className="m-3  border border-1 rounded-lg border-emerald-600 bg-emerald-500/20  p-3 flex w-96">
+    <h1 className="">Loading ...</h1>
+  </div>;
   
 
  

@@ -4,74 +4,88 @@
 # F: Fusion of ventricular and normal beat
 # Q: Unclassifiable beat
 # M: myocardial infarction
+from flask import Flask, request, json
+from flask_cors import CORS
+import matplotlib.pyplot as plt
+import matplotlib
 import random
 import requests
 import numpy as np
-import datetime
+from datetime import datetime
 
-TOKEN=''
+TOKEN = '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'
 API_URL = "https://api-inference.huggingface.co/models/gianlab/swin-tiny-patch4-window7-224-finetuned-ecg-classification"
 headers = {"Authorization": f"Bearer {TOKEN}"}
+
+
 def query(filename):
     with open(filename, "rb") as f:
         data = f.read()
     response = requests.post(API_URL, headers=headers, data=data)
     return response.json()
-# output = query("F123.png")
-import matplotlib
+
+
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from flask import Flask,request,json
-from flask_cors import CORS
 
 app = Flask(__name__)
-cors=CORS(app)
-latestRequest=datetime.datetime.now()
-i=0
-liveD=[]
+cors = CORS(app)
+lastTimeESPSentData = datetime.utcnow()
+sensor_live=False
+timeDifference = 0
+currentData={
+        'HeartRate': 0,
+    'SpO2': 0
+}
+liveD = []
+DataTemplate = {
+    'HeartRate': None,
+    'SpO2': None
+}
+
+
+@app.before_request
+def before_request():
+    global timeDifference,sensor_live
+    timeDifference = (datetime.utcnow()-lastTimeESPSentData).total_seconds()
+    sensor_live = True if timeDifference < 30 else False
+
 @app.route('/live_Data')
 def LiveData():
-    global i
-    i+=1
-    f=open('r.json')
-    d=json.load(f)
-    # res=(d['data'][i%(len(d['data'])-1)])
-    res=random.randint(0,1000)/1000
-    
+    return json.dumps({'data': liveD, 'sensor_live': sensor_live})
 
 
-    liveD.append(res)
-    if(len(liveD)>10):
-        liveD.pop(0)
-                    
-    return json.dumps({'data':liveD}) 
-
-
-@app.route('/Send', methods=['POST'])    
+@app.route('/Send', methods=['POST'])
 def Send():
-    global latestRequest
-    return json.dumps({'done':True})
-
+    global lastTimeESPSentData
+    lastTimeESPSentData = datetime.utcnow()
+    print(request.json)
+    sentData=request.json
+    currentData=sentData
+    currentData['CurrentTime']=lastTimeESPSentData
+    liveD.append(currentData)
+    if (len(liveD) > 10):
+        liveD.pop(0)
+    return json.dumps({'done': True})
 
 
 @app.route('/Predict')
 def Predict():
-    
-    # data=request.json['data']
     plt.clf()
     plt.plot(liveD)
     plt.axis('off')
     plt.savefig("test.png", bbox_inches='tight')
-    pred=query("test.png")
-    max={
-    'score':0,
-    'label':None
+    pred = query("test.png")
+    maximumValue = {
+        'score': 0,
+        'label': None
     }
+    print(pred)
     for i in pred:
-        if(i["score"]>max["score"]):
-            max=i       
-   
-    return json.dumps({'done':True,'pred':max})
+        if (i["score"] > maximumValue["score"]):
+            print(f"new Max: {i}")
+            maximumValue = i
+    return json.dumps({'done': True, 'pred': maximumValue})
 
-if __name__=='__main__':
-    app.run(port='0.0.0.0')
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')

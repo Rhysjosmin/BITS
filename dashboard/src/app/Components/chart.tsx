@@ -1,5 +1,5 @@
 import React from "react";
-import useSWR from 'swr'
+import useSWR from "swr";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,6 +24,15 @@ ChartJS.register(
 
 const options = {
   responsive: true,
+  scales:{
+    x:{
+      ticks: {
+      callback:function(value:any){
+        return ''
+      }
+      }
+    }
+  },
   plugins: {
     legend: {
       position: "top" as const,
@@ -34,10 +43,9 @@ const options = {
   },
 };
 
-
-
-
-const fetcher:any = async (...args: Parameters<typeof fetch>): Promise<any> => {
+const fetcher: any = async (
+  ...args: Parameters<typeof fetch>
+): Promise<any> => {
   const response = await fetch(...args);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -52,28 +60,77 @@ export function Chart(params: any) {
     { refreshInterval: 10 }
   );
 
+ 
+  let labels =  [0,0,0,0,0,0,0]
 
-  if (error)
-    return (
-      <div className="bg-[#22020266] w-64 h-40 rounded-lg p-2 ">
-        Failed to load
-      </div>
-    );
-  if (!APIData)
-    return <div className="w-64 h-40 bg-[#02221866] rounded-lg p-2"></div>;
-  // console.log(APIData['data'])
-  const labels=APIData['data']
-  const data = {
+  let data = {
     labels,
     datasets: [
       {
         label: "Heart Rate",
-        data: APIData['data'],
+        data: [0,0,0,0,0,0,0],
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
+      {
+        label: "SpO2",
+        data:  [0,0,0,0,0,0,0],
+        borderColor: "#62C370",
+        backgroundColor: "#62C37044",
+      },
     ],
   };
+
+  if (error)
+    return (
+      <div
+        className={
+          "w-[36rem] border border-1 rounded-lg border-gray-100 p-2 mt-4 ml-4"
+        }
+      >
+        <h1 className="font-bold text-xl">{params.title}</h1>
+        <Line options={options} data={data} />
+      </div>
+    );
+  if (!APIData)
+    return (
+      <div
+        className={
+          "w-[36rem] border border-1 rounded-lg border-gray-100 p-2 mt-4 ml-4"
+        }
+      >
+        <h1 className="font-bold text-xl">{params.title}</h1>
+        <Line options={options} data={data} />
+      </div>
+    );
+
+
+    labels = APIData["data"].map((item: any) => {
+      return item["CurrentTime"];
+    });
+  
+    data = {
+      labels,
+      datasets: [
+        {
+          label: "Heart Rate",
+          data: APIData["data"].map((item: any) => {
+            return item["HeartRate"];
+          }),
+          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+        {
+          label: "SpO2",
+          data: APIData["data"].map((item: any) => {
+            return item["SpO2"];
+          }),
+          borderColor: "#62C370",
+          backgroundColor: "#62C37044",
+        },
+      ],
+    };
+
   return (
     <div
       className={

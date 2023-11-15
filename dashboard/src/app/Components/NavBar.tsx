@@ -95,7 +95,7 @@ export function NavBar(props: any) {
         onClick={() => setMenuOpen(!menuOpen)}
 
       >
-        <Profile user={user.name} />
+        <Profile user={user.name}  />
       </button>
       <div   className={`${
             menuOpen

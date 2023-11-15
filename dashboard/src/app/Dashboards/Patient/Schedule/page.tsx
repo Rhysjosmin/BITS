@@ -49,10 +49,10 @@ export default function Page() {
         </Link>
       ) : (
         <button
-          onClick={() => {setMeetingLink(`https://meet.jit.si/${localStorage.getItem('user')}-Amy-${Date.now()}`)}}
+          onClick={() => {setMeetingLink(`https://meet.jit.si/Jacob-John-0234`)}}
           className="mt-4 transition border hover:border-blue-500 hover:bg-blue-200 flex  p-2 rounded-lg"
         >
-          Schedule A Meeting With Dr {"Amy"}
+          Schedule A Meeting With Dr {"John"}
         </button>
       )}
     </div>

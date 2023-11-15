@@ -66,8 +66,8 @@ export default function Home() {
   })
 
   return (
-    <main className="flex items-center justify-center h-screen bg-sky-200">
-      <div className="bg-blue-400 w-72 rounded-3xl p-5 flex flex-col items-center -mt-16">
+    <main className="flex items-center justify-center h-screen bg-white">
+      <div className="bg-blue-400/60 border-blue-500 border w-72 rounded-2xl p-5 flex flex-col items-center -mt-16">
         <h1 className="text-3xl font-black p-4">Login</h1>
         <form
           className="mt-3 w-64 flex flex-col items-center gap-1.5"
@@ -90,7 +90,7 @@ export default function Home() {
             onChange={handleInputChange}
           />
           <button
-            className="p-2 block bg-blue-600 hover:bg-blue-700 w-64 rounded-xl font-bold text-white"
+            className="p-2 mt-3 block transition bg-blue-500/70 border-blue-500/20 border hover:bg-blue-600 hover:border-blue-700/70 w-64 rounded-xl font-bold text-black"
             type="submit"
           >
             Login

@@ -4,7 +4,7 @@ import { DashboardTable } from "@/app/Components/Table";
 export default function Page() {
   const Data: any = [
     [
-      "Aaron",
+      "Jacob",
       2,
       <span key={0} className="flex gap-1 p-1">
         <span>
@@ -16,7 +16,7 @@ export default function Page() {
       </span>,
     ],
     [
-      "Adam",
+      "Abigail",
       2,
       <span key={0} className="flex gap-1 p-1">
         <span>
@@ -33,9 +33,9 @@ export default function Page() {
   return (
     <div>
       <div className="flex gap-2">
-        <InfoCard name="Total" value={100} />
-        <InfoCard name="Mild" value={30} />
-        <InfoCard name="OK" value={10} />
+        <InfoCard name="Total" value={2} />
+        <InfoCard name="Mild" value={1} />
+        <InfoCard name="OK" value={2} />
       </div>
       <div>
         <DashboardTable Headers={Headers} Data={Data} />

@@ -75,13 +75,48 @@ def Send():
     return json.dumps({'done': True})
 
 
+# N: Normal beat
+# S: Supraventricular premature beat
+# V: Premature ventricular contraction
+# F: Fusion of ventricular and normal beat
+# Q: Unclassifiable beat
+# M: myocardial infarction
+
 @app.route('/Predict')
 def Predict():
-    plt.clf()
-    plt.plot(liveD)
-    plt.axis('off')
-    plt.savefig("test.png", bbox_inches='tight')
-    pred = query("test.png")
+    # plt.clf()
+    # plt.plot(liveD)
+    # plt.axis('off')
+    # plt.savefig("test.png", bbox_inches='tight')
+    # pred = query("test.png")
+
+    pred=[
+        {
+         'score': random.randint(0,100),
+        'label': 'N'
+    },
+        {
+         'score': random.randint(0,100),
+        'label': 'S'
+    },
+        {
+         'score': random.randint(0,100),
+        'label': 'V'
+    },
+        {
+         'score': random.randint(0,100),
+        'label': 'F'
+    },
+        {
+         'score': random.randint(0,100),
+        'label': 'Q'
+    },
+        {
+         'score': random.randint(0,100),
+        'label': 'M'
+    },
+     
+        ]
     maximumValue = {
         'score': 0,
         'label': None

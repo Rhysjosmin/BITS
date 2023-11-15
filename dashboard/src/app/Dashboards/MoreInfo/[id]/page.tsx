@@ -5,8 +5,11 @@ import { Prediction } from "@/app/Components/prediction";
 export default function Page({ params }: { params: { id: string } }) {
   return (
     <div>
-      <Chart title={params.id} />
-      <Prediction/>
+      <h1 className="text-3xl font-black ml-4">
+      {params.id}
+      </h1>
+      <Chart />
+      <Prediction health={true} />
     </div>
   );
 }

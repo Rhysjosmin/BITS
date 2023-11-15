@@ -3,13 +3,11 @@
 @tailwind utilities;
 
 
-table td,table th{
-    border:1px solid rgba(0, 0, 0, 0.268);
-    text-indent: 6px;
-}
+
 table th{
-    background: rgba(0, 0, 255, 0.311);
+    background: rgb(62, 126, 255);
     text-align: start;
     min-width: 140px;
     padding-right: 50px;
+
 }

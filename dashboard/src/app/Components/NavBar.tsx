@@ -51,10 +51,10 @@ function SearchBar() {
 }
 function Profile(props: any) {
   return (
-    <div className="bg-blue-200 rounded p-2 flex gap-4 items-center ">
-      <h1>{props.user}</h1>
+    <div className="bg-blue-200 transition hover:bg-blue-500 rounded-full p-[1px]  flex gap-4 items-center w-10 h-auto aspect-square justify-between">
+      {/* <h1>{props.user}</h1> */}
       <Image
-        className="rounded"
+        className="rounded-[inherit] w-full aspect-square"
         height={28}
         width={28}
         unoptimized={true}
@@ -67,6 +67,7 @@ function Profile(props: any) {
 
 export function NavBar(props: any) {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function LogOut() {
     localStorage.setItem("LoggedIn", "false");
@@ -90,14 +91,36 @@ export function NavBar(props: any) {
       <BackButton />
       <h1>{user.userType} Dashboard</h1>
       {/* <SearchBar/> */}
-      <Profile user={user.name} />
       <button
-        onClick={() => LogOut()}
-        className="fixed right-0 bg-red-600 h-12 rounded-l-2xl flex items-center p-3 top-24 hover:bg-red-500"
+        onClick={() => setMenuOpen(!menuOpen)}
+
       >
-        <MaterialSymbolsLogoutRounded />
-        Logout
+        <Profile user={user.name} />
       </button>
+      <div   className={`${
+            menuOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          } fixed z-50 right-2 top-[3.55rem] rounded transition shadow-lg bg-white w-40  flex flex-col gap-[2px] text-black text-sm font-light text-end`}
+     >
+      
+      <h1 className="px-2 pt-2 pb-1 font-medium text-md">
+      Welcome  {user.name}
+      </h1>
+      <hr className="mr-2 ml-6 mb-1" />
+        <button
+          onClick={() => LogOut()}
+          className="flex items-center justify-end   w-full transition hover:bg-blue-100/60 hover:outline-blue-300/60 hover:outline outline-1 p-2 "
+           >
+          Logout
+        </button>
+        {/* <button
+          onClick={() =>router.push('/Settings')}
+          className="flex items-center justify-end   w-full transition hover:bg-blue-100/60 hover:outline-blue-300/60 hover:outline outline-1 p-2 "
+           >
+          Settings
+        </button> */}
+      </div>
     </div>
   );
 }

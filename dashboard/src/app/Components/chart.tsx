@@ -55,7 +55,7 @@ const fetcher: any = async (
 
 export function Chart(params: any) {
   const { data: APIData, error } = useSWR(
-    `https://bits-bz45.onrender.com/live_Data`,
+    `http://127.0.0.1:5000/live_Data`,
     fetcher,
     { refreshInterval: 10 }
   );
@@ -96,7 +96,7 @@ export function Chart(params: any) {
     return (
       <div
         className={
-          "w-[36rem] border border-1 rounded-lg border-gray-100 p-2 mt-4 ml-4"
+          "w-[36rem] border border-1 rounded-lg border-gray-100 hover:border-black p-2 mt-4 ml-4"
         }
       >
         <h1 className="font-bold text-xl">{params.title}</h1>

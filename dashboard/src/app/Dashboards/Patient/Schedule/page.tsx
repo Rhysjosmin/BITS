@@ -1,6 +1,9 @@
+"use client";
 import { DashboardTable } from "@/app/Components/Table";
+import { ArcticonsJitsimeet } from "@/app/Components/icons";
 import { Grid } from "@mui/material";
 import Link from "next/link";
+import { useState } from "react";
 
 const currentDate = "2018-11-01";
 const schedulerData = [
@@ -17,26 +20,41 @@ const schedulerData = [
 ];
 
 export default function Page() {
+  const [meetingLink, setMeetingLink] = useState('');
   const Data: any = [
     [
       "10 Jan 23",
       "10:00 AM",
       "Paracetamol",
       "take the medication only if you have fever",
-
     ],
     [
       "12 Jan 23",
       "All Day",
       "Therapy",
       "Don't Forget to bring a book and a pen",
-   
     ],
   ];
-  const Headers: any = ["Date","Time", "Event", "Notes"];
+  const Headers: any = ["Date", "Time", "Event", "Notes"];
 
-return<div>
-          <DashboardTable Headers={Headers} Data={Data} />
-
-</div>
+  return (
+    <div>
+      <DashboardTable Headers={Headers} Data={Data} />
+      {meetingLink ? (
+        <Link
+          href={meetingLink}
+          className="mt-4 w-44 group transition border hover:border-emerald-500 hover:bg-emerald-200 flex items-center justify-between  p-2 rounded-lg"
+        >
+          Join Meeting <ArcticonsJitsimeet className="w-8 h-auto transition group-hover:text-emerald-800"/>
+        </Link>
+      ) : (
+        <button
+          onClick={() => {setMeetingLink(`https://meet.jit.si/${localStorage.getItem('user')}-Amy-${Date.now()}`)}}
+          className="mt-4 transition border hover:border-blue-500 hover:bg-blue-200 flex  p-2 rounded-lg"
+        >
+          Schedule A Meeting With Dr {"Amy"}
+        </button>
+      )}
+    </div>
+  );
 }

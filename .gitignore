@@ -1,3 +1,4 @@
 server/venv/
 server/node_modules/agent-base/dist/helpers.js
 dashboard/venv/
+server/.env

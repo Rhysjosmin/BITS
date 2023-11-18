@@ -4,8 +4,6 @@
 # F: Fusion of ventricular and normal beat
 # Q: Unclassifiable beat
 # M: myocardial infarction
-import os
-from os.path import join, dirname
 from twilio.rest import Client
 from flask import Flask, request, json
 from flask_cors import CORS
@@ -16,7 +14,7 @@ import requests
 import numpy as np
 from datetime import datetime
 import sqlite3
-from dotenv import load_dotenv
+
 
 
 TOKEN = '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'
@@ -182,7 +180,5 @@ def SignIN(Username, Password):
 
 
 if __name__ == '__main__':
-    dotenv_path = join(dirname(__file__), '.env')
-    load_dotenv(dotenv_path)
     DatabaseINIT()
     app.run(debug=True, host='0.0.0.0')

@@ -59,7 +59,7 @@ def LiveData():
     return json.dumps({'data': liveD, 'sensor_live': sensor_live})
 
 
-@app.route('/Send', methods=['POST'])
+@app.route('/send', methods=['POST'])
 def Send():
     global lastTimeESPSentData
     lastTimeESPSentData = datetime.utcnow()

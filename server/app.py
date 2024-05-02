@@ -17,7 +17,7 @@ import sqlite3
 
 
 
-TOKEN = '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'
+TOKEN = ''
 API_URL = "https://api-inference.huggingface.co/models/gianlab/swin-tiny-patch4-window7-224-finetuned-ecg-classification"
 headers = {"Authorization": f"Bearer {TOKEN}"}
 
